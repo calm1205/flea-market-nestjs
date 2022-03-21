@@ -11,7 +11,6 @@ import {
 import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from '../entities/item.entity';
 import { ItemsService } from './items.service';
-import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Controller('items')
 export class ItemsController {

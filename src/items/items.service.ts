@@ -3,12 +3,10 @@ import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from '../entities/item.entity';
 import { ItemRepository } from './item.repository';
 import { ItemStatus } from './item-status.enum';
-import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Injectable()
 export class ItemsService {
   constructor(private readonly itemRepository: ItemRepository) {}
-  private items: Item[] = [];
 
   async findAll(): Promise<Item[]> {
     return await this.itemRepository.find();
