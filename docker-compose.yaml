@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   nest_node:
     image: node:17
