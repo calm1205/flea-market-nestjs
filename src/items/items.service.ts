@@ -9,6 +9,10 @@ export class ItemsService {
     return this.items;
   }
 
+  findById(id: string): Item {
+    return this.items.find((item) => item.id === id);
+  }
+
   create(item: Item): Item {
     this.items.push(item);
     return item;
