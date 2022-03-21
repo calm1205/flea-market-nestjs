@@ -4,6 +4,7 @@
 docker compose up -d
 docker compose exec node bash
 npx typeorm migration:run
+npm run start:dev
 ```
 
 ```bash
