@@ -6,7 +6,7 @@ export class ItemsService {
   private items: Item[] = [];
 
   findAll() {
-    return 'this is itemsService.';
+    return this.items;
   }
 
   create(item: Item): Item {
