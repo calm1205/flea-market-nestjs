@@ -1,8 +1,8 @@
 version: '3'
 services:
-  nest_node:
+  node:
     image: node:17
-    container_name: nest_node
+    container_name: flea_market_node
     ports:
       - 8080:3000
     volumes:
@@ -12,9 +12,9 @@ services:
 
   postgres:
     image: postgres:12.2-alpine
-    container_name: postgres
+    container_name: flea_market_postgres
     ports:
-      - 5555:5555
+      - 5555:5432
     volumes:
       - ./docker/postgres/init.d:/docker-entrypoint-initdb.d
       - ./docker/postgres/pgdata:/var/lib/postgresql/data
