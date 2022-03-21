@@ -14,7 +14,7 @@ services:
     image: postgres:12.2-alpine
     container_name: postgres
     ports:
-      - 5432:5432
+      - 5555:5555
     volumes:
       - ./docker/postgres/init.d:/docker-entrypoint-initdb.d
       - ./docker/postgres/pgdata:/var/lib/postgresql/data
