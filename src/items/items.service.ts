@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from '../entities/item.entity';
 import { ItemRepository } from './item.repository';
+import { ItemStatus } from './item-status.enum';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Injectable()
 export class ItemsService {
@@ -22,13 +24,14 @@ export class ItemsService {
     return await this.itemRepository.createItem(createItemDto);
   }
 
-  // updateStatus(id: string): Item {
-  //   const item = this.findById(id);
-  //   item.status = ItemStatus.SOLD_OUT;
-  //   return item;
-  // }
+  async updateStatus(id: string): Promise<void> {
+    await this.itemRepository.update(id, {
+      status: ItemStatus.SOLD_OUT,
+      updatedAt: new Date().toISOString(),
+    });
+  }
 
-  delete(id: string): void {
-    this.items = this.items.filter((item) => item.id !== id);
+  async delete(id: string): Promise<void> {
+    await this.itemRepository.delete({ id });
   }
 }
