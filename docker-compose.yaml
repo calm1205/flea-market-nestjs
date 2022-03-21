@@ -1,0 +1,11 @@
+version: "3"
+services:
+  nest_node:
+    image: node:17
+    container_name: nest_node
+    ports:
+      - 8080:3000
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+    tty: true
