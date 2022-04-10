@@ -15,6 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   // 処理の中で自動で呼ばれる。メソッド名はvalidateで固定
+  // GetUserなどで使用されているrequestの値に格納される
   async validate(payload: { id: string; username: string }): Promise<User> {
     const { id, username } = payload;
     const user = await this.userRepository.findOne({ id, username });
