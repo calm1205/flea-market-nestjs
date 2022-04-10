@@ -15,9 +15,6 @@ services:
     container_name: flea_market_postgres
     ports:
       - 5555:5432
-    volumes:
-      - ./docker/postgres/init.d:/docker-entrypoint-initdb.d
-      - ./docker/postgres/pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres

@@ -4,6 +4,7 @@
 docker compose up -d
 docker compose exec node bash
 npx typeorm migration:run
+npm run start:dev
 ```
 
 ```bash
@@ -16,5 +17,13 @@ npx nest -v
 new migration
 
 ```
+docker compose exec node bash
 npx typeorm migration:generate -n <migration_name>
+```
+
+migration
+
+```
+docker compose exec node bash
+npx typeorm migration:run
 ```
