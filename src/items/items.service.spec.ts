@@ -10,6 +10,7 @@ import { NotFoundException } from '@nestjs/common';
 const mockItemRepository = () => ({
   find: jest.fn(),
   findOne: jest.fn(),
+  createItem: jest.fn(),
 });
 
 const mockUser1 = {
@@ -27,8 +28,9 @@ const mockUser2 = {
 } as User;
 
 describe('ItemsServiceTest', () => {
-  let itemsService;
+  let itemsService: ItemsService;
   let itemRepository;
+  let mockItem: Item;
   beforeEach(async () => {
     const module = await Test.createTestingModule({
       providers: [
@@ -42,6 +44,17 @@ describe('ItemsServiceTest', () => {
 
     itemsService = module.get<ItemsService>(ItemsService);
     itemRepository = module.get<ItemRepository>(ItemRepository);
+    mockItem = {
+      id: 'test-id',
+      name: 'macBook',
+      price: 3000,
+      description: '',
+      status: ItemStatus.ON_SALE,
+      createdAt: '',
+      updatedAt: '',
+      userId: mockUser1.id,
+      user: mockUser1,
+    };
   });
 
   describe('findAll', () => {
@@ -56,18 +69,7 @@ describe('ItemsServiceTest', () => {
 
   describe('findById', () => {
     it('正常系', async () => {
-      const expected = {
-        id: 'test-id',
-        name: 'macBook',
-        price: 3000,
-        description: '',
-        status: ItemStatus.ON_SALE,
-        createdAt: '',
-        updatedAt: '',
-        userId: mockUser1.id,
-        user: mockUser1,
-      } as Item;
-
+      const expected = mockItem;
       itemRepository.findOne.mockResolvedValue(expected);
       const result = await itemsService.findById('test-id');
       expect(result).toEqual(expected);
@@ -78,6 +80,19 @@ describe('ItemsServiceTest', () => {
       await expect(itemsService.findById('notExistId')).rejects.toThrow(
         NotFoundException,
       );
+    });
+  });
+
+  describe('create', () => {
+    it('正常系', async () => {
+      const expected = mockItem;
+      itemRepository.createItem.mockResolvedValue(expected);
+      const result = await itemsService.create(
+        { name: 'macBook', price: 3000, description: '' },
+        mockUser1,
+      );
+
+      expect(result).toEqual(expected);
     });
   });
 });
