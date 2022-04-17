@@ -11,6 +11,7 @@ const mockItemRepository = () => ({
   find: jest.fn(),
   findOne: jest.fn(),
   createItem: jest.fn(),
+  update: jest.fn(),
 });
 
 const mockUser1 = {
@@ -93,6 +94,14 @@ describe('ItemsServiceTest', () => {
       );
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe('updateStatus', () => {
+    it('正常系', async () => {
+      itemRepository.findOne.mockResolvedValue(mockItem);
+      await itemsService.updateStatus('test-id', mockUser1);
+      expect(itemRepository.update).toHaveBeenCalled();
     });
   });
 });
