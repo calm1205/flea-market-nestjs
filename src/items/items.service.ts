@@ -29,8 +29,8 @@ export class ItemsService {
 
   async updateStatus(id: string, user: User): Promise<void> {
     const item = await this.itemRepository.findOne({ id });
-    if (item.userId !== user.id)
-      throw new BadRequestException('出品者でないと更新できません');
+    if (item.userId === user.id)
+      throw new BadRequestException('自分の商品を購入することはできません');
 
     await this.itemRepository.update(id, {
       status: ItemStatus.SOLD_OUT,

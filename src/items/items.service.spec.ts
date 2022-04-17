@@ -5,7 +5,7 @@ import { ItemRepository } from './item.repository';
 import { ItemsService } from './items.service';
 import { Item } from '../entities/item.entity';
 import { ItemStatus } from './item-status.enum';
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 const mockItemRepository = () => ({
   find: jest.fn(),
@@ -100,8 +100,15 @@ describe('ItemsServiceTest', () => {
   describe('updateStatus', () => {
     it('正常系', async () => {
       itemRepository.findOne.mockResolvedValue(mockItem);
-      await itemsService.updateStatus('test-id', mockUser1);
+      await itemsService.updateStatus('test-id', mockUser2);
       expect(itemRepository.update).toHaveBeenCalled();
+    });
+
+    it('異常系: 自身の商品を購入', async () => {
+      itemRepository.findOne.mockResolvedValue(mockItem);
+      await expect(
+        itemsService.updateStatus('test-id', mockUser1),
+      ).rejects.toThrow(BadRequestException);
     });
   });
 });
