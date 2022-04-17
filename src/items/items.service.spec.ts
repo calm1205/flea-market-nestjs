@@ -12,6 +12,7 @@ const mockItemRepository = () => ({
   findOne: jest.fn(),
   createItem: jest.fn(),
   update: jest.fn(),
+  delete: jest.fn(),
 });
 
 const mockUser1 = {
@@ -109,6 +110,21 @@ describe('ItemsServiceTest', () => {
       await expect(
         itemsService.updateStatus('test-id', mockUser1),
       ).rejects.toThrow(BadRequestException);
+    });
+  });
+
+  describe('delete', () => {
+    it('正常系', async () => {
+      itemRepository.findOne.mockResolvedValue(mockItem);
+      await itemRepository.delete('test-id', mockUser1);
+      expect(itemRepository.delete).toHaveBeenCalled();
+    });
+
+    it('異常系: 他人の商品を削除', async () => {
+      itemRepository.findOne.mockResolvedValue(mockItem);
+      await expect(itemsService.delete('test-id', mockUser2)).rejects.toThrow(
+        BadRequestException,
+      );
     });
   });
 });
